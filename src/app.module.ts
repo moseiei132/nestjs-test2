@@ -12,6 +12,7 @@ import jwtConfig from '../config/jwt.config'
 import { DatabaseModule } from './database/database.module'
 import { UserModule } from './users/user.module'
 import { AuthModule } from './auth/auth.module'
+import { TopicModule } from './topics/topic.module'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module'
     DatabaseModule,
     UserModule,
     AuthModule,
+    TopicModule,
   ],
   controllers: [AppController],
   providers: [
