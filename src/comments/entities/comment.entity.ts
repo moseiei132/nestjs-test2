@@ -31,7 +31,7 @@ export class Comment {
   updatedAt: Date
 
   @Column({ name: 'deleted_at' })
-  deletedAt: Date
+  deletedAt?: Date
 
   @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'user_id' })

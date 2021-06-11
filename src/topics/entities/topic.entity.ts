@@ -31,7 +31,7 @@ export class Topic {
   updatedAt: Date
 
   @Column({ name: 'deleted_at' })
-  deletedAt: Date
+  deletedAt?: Date
 
   @ManyToOne(() => User, (user) => user.topics)
   @JoinColumn({ name: 'user_id' })
