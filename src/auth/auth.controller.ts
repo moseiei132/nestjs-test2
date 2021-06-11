@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { CreateUserDto } from '../users/dtos/user.dto'
 import { TUser } from '../users/transformers/user.transformer'
 import { LoginDto } from './dtos/auth.dto'
@@ -8,7 +9,8 @@ import { AuthService } from './services/auth.service'
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-  @Post('login')
+
+  @Post('/login')
   async login(@Body() data: LoginDto): Promise<IAccessToken> {
     return this.authService.login({
       username: data.username,
@@ -16,7 +18,8 @@ export class AuthController {
     })
   }
 
-  @Post('register')
+
+  @Post('/register')
   register(@Body() data: CreateUserDto): Promise<TUser> {
     return this.authService.register({
       username: data.username,

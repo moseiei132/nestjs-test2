@@ -31,4 +31,6 @@ export class TopicController {
     async getTopic(@Param('topicId') topicId: number): Promise<TTopic> {
         return this.topicService.getTopic(topicId)
     }
+
+    
 }

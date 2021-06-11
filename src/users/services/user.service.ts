@@ -19,19 +19,16 @@ export class UserService {
 
   async getUserById(userId: number): Promise<TUser> {
     const user = await this.userRepo.findOne({ id: userId })
-    if (!user) throw new NotFoundException('User not found')
     return plainToClass(TUser, user)
   }
 
   async getUserByUsername(username: string): Promise<TUser> {
     const user = await this.userRepo.findOne({ username })
-    if (!user) throw new NotFoundException('User not found')
     return plainToClass(TUser, user)
   }
 
   async getUserByEmail(email: string): Promise<TUser> {
     const user = await this.userRepo.findOne({ email })
-    if (!user) throw new NotFoundException('User not found')
     return plainToClass(TUser, user)
   }
 }
