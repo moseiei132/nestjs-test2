@@ -8,13 +8,13 @@ export interface RequestUser extends Request {
   user: IUser
 }
 
-export interface ILogin{
+export interface ILogin {
   username: string
 
   password: string
 }
 
-export interface IRegister{
+export interface IRegister {
   username: string
 
   password: string

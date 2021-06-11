@@ -4,7 +4,7 @@ export class TUser {
   id: number
 
   username: string
-  
+
   email: string
 
   @Exclude()
