@@ -4,8 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UserRepository } from "../../users/repositories/user.repository";
 import { IAccessToken, ILogin, IRegister } from "../interfaces/auth.interface";
 import * as bcrypt from 'bcrypt'
-import { CreateUserDto } from "../../users/dtos/user.dto";
-import { User } from "../../users/entities/user.entity";
+import { TUser } from "../../users/transformers/user.transformer";
+import { plainToClass } from "class-transformer";
 
 @Injectable()
 export class AuthService {
@@ -27,8 +27,8 @@ export class AuthService {
         }
       }
     
-      async register(userData: IRegister): Promise<CreateUserDto & User> {
+      async register(userData: IRegister): Promise<TUser> {
         userData.password = await bcrypt.hash(userData.password, 10)
-        return this.userRepo.save(userData)
+        return plainToClass(TUser, await this.userRepo.save(userData)) 
       }
 }

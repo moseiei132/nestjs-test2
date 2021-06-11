@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { CreateUserDto } from "../users/dtos/user.dto";
-import { User } from "../users/entities/user.entity";
+import { TUser } from "../users/transformers/user.transformer";
 import { LoginDto } from "./dtos/auth.dto";
 import { IAccessToken } from "./interfaces/auth.interface";
 import { AuthService } from "./services/auth.service";
@@ -16,7 +16,7 @@ export class AuthController {
     }
 
     @Post('register')
-    register(@Body() data: CreateUserDto): Promise<User> {
+    register(@Body() data: CreateUserDto): Promise<TUser> {
         return this.authService.register({username: data.username, email: data.email, password: data.password})
     }
 }
