@@ -11,6 +11,7 @@ import commonConfig from '../config/common.config';
 import jwtConfig from '../config/jwt.config';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { UserModule } from './users/user.module';
       load: [databaseConfig, commonConfig, jwtConfig],
     }),
     DatabaseModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
