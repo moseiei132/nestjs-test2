@@ -10,13 +10,15 @@ import databaseConfig from '../config/database.config';
 import commonConfig from '../config/common.config';
 import jwtConfig from '../config/jwt.config';
 import { DatabaseModule } from './database/database.module';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [databaseConfig, commonConfig, jwtConfig],
     }),
-    DatabaseModule
+    DatabaseModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [
