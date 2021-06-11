@@ -13,7 +13,6 @@ export class UserService {
 
   async getUsers(): Promise<TUser[]> {
     const users = await this.userRepo.find()
-    if (users.length === 0) throw new NotFoundException('Users not found')
     return plainToClass(TUser, users)
   }
 

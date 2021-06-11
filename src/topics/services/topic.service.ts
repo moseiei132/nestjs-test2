@@ -34,7 +34,6 @@ export class TopicService{
 
     async getTopic(topicId: number):Promise<TTopic>{
         const topic = await this.topicRepo.findOne({id: topicId})
-        if(!topic)throw new NotFoundException('Topic not found')
         let topicReactions = await this.getTopicReactions(topicId)
         let topic2 = plainToClass(TTopic, topic)
         topicReactions = plainToClass(TTopicReact, topicReactions)
