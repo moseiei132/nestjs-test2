@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
-import { User } from "./entities/user.entity";
 import { UserService } from "./services/user.service";
+import { TUser } from "./transformers/user.transformer";
 
 @Controller('users')
 export class UserController{
@@ -8,7 +8,7 @@ export class UserController{
         private userService: UserService
     ){}
     @Get()
-    getUsers(): Promise<User[]>{
+    getUsers(): Promise<TUser[]>{
         return this.userService.getUsers()
     }
 }
