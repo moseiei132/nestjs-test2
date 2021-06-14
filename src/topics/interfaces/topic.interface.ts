@@ -1,13 +1,25 @@
-export interface ICreateTopic{
-    userId: number
+export interface ICreateTopic {
+  userId: number
 
-    name: string
+  name: string
 
-    body: string
+  body: string
 }
 
-export interface ICreateTopicReact{
-    topicId: number
-    userId: number
-    reaction: string
+export interface IUpdateTopic {
+  userId: number
+
+  topicId: number
+
+  name: string
+
+  body: string
+}
+
+export interface ICreateTopicReact {
+  topicId: number
+
+  userId: number
+
+  reaction: string
 }

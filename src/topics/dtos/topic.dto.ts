@@ -1,5 +1,4 @@
-export class CreateTopicDto{
-    name: string
-    body: string
+export class CreateTopicDto {
+  name: string
+  body: string
 }
-

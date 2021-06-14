@@ -18,7 +18,6 @@ export class AuthController {
     })
   }
 
-
   @Post('/register')
   register(@Body() data: CreateUserDto): Promise<TUser> {
     return this.authService.register({
