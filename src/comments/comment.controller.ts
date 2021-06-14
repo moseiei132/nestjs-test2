@@ -26,8 +26,8 @@ export class CommentController {
   @Post('topics/:topicId')
   async createComment(
     @UseUser() user: TUser,
-      @Body('body') body: string,
-      @Param('topicId') topicId: number,
+    @Body('body') body: string,
+    @Param('topicId') topicId: number,
   ): Promise<Comment> {
     return this.commentService.createComment({
       userId: user.id,
@@ -40,8 +40,8 @@ export class CommentController {
   @Put('/:commentId')
   async updateTopic(
     @UseUser() user: TUser,
-      @Param('commentId') commentId: number,
-      @Body('body') body: string,
+    @Param('commentId') commentId: number,
+    @Body('body') body: string,
   ): Promise<TUpdatedComment> {
     return this.commentService.updateComment({
       userId: user.id,
@@ -54,7 +54,7 @@ export class CommentController {
   @Delete('/:commentId')
   async deleteTopic(
     @UseUser() user: TUser,
-      @Param('commentId') commentId: number,
+    @Param('commentId') commentId: number,
   ): Promise<TUpdatedComment> {
     return this.commentService.deleteComment({
       userId: user.id,
@@ -66,8 +66,8 @@ export class CommentController {
   @Post('/:commentId')
   async createCommentReact(
     @UseUser() user: TUser,
-      @Param('commentId') commentId: number,
-      @Body('reaction') reaction: string,
+    @Param('commentId') commentId: number,
+    @Body('reaction') reaction: string,
   ): Promise<TCommentReact> {
     return this.commentService.createCommentReact({
       userId: user.id,

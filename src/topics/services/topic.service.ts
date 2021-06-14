@@ -52,17 +52,17 @@ export class TopicService {
     return plainToClass(TTopic, topic)
   }
 
-  async createTopicReact(data: ICreateTopicReact): Promise<unknown> {
+  async createTopicReact(data: ICreateTopicReact): Promise<TTopicReact> {
     const topicReaction = await this.getTopicReaction(data.topicId, data.userId)
     if (topicReaction) {
-      const deletedTopic = await this.topicReactRepo.delete({
+      await this.topicReactRepo.delete({
         topicId: data.topicId,
         userId: data.userId,
       })
-      if (topicReaction.reaction === data.reaction) return deletedTopic
+      if (topicReaction.reaction === data.reaction) return topicReaction
     }
     const createdTopicReact = await this.topicReactRepo.save(data)
-    return createdTopicReact
+    return plainToClass(TTopicReact, createdTopicReact)
   }
 
   async updateTopic(data: IUpdateTopic): Promise<TUpdatedTopic> {

@@ -28,7 +28,7 @@ export class TopicController {
   @Post()
   async createTopic(
     @UseUser() user: TUser,
-      @Body() data: CreateTopicDto,
+    @Body() data: CreateTopicDto,
   ): Promise<Topic> {
     return this.topicService.createTopic({
       userId: user.id,
@@ -41,8 +41,8 @@ export class TopicController {
   @Post('/:topicId')
   async createTopicReact(
     @UseUser() user: TUser,
-      @Param('topicId') topicId: number,
-      @Body('reaction') reaction: string,
+    @Param('topicId') topicId: number,
+    @Body('reaction') reaction: string,
   ): Promise<TTopicReact> {
     return this.topicService.createTopicReact({
       userId: user.id,
@@ -55,8 +55,8 @@ export class TopicController {
   @Put('/:topicId')
   async updateTopic(
     @UseUser() user: TUser,
-      @Param('topicId') topicId: number,
-      @Body() data: CreateTopicDto,
+    @Param('topicId') topicId: number,
+    @Body() data: CreateTopicDto,
   ): Promise<TUpdatedTopic> {
     return this.topicService.updateTopic({
       userId: user.id,
@@ -70,7 +70,7 @@ export class TopicController {
   @Delete('/:topicId')
   async deleteTopic(
     @UseUser() user: TUser,
-      @Param('topicId') topicId: number,
+    @Param('topicId') topicId: number,
   ): Promise<TUpdatedTopic> {
     return this.topicService.deleteTopic({
       userId: user.id,
