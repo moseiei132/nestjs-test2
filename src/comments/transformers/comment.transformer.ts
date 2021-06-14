@@ -1,11 +1,11 @@
 import { Exclude } from 'class-transformer'
 
-export class TTopic {
+export class TComment {
   id: number
 
-  userId: number
+  topicId: number
 
-  name: string
+  userId: number
 
   body: string
 
@@ -16,19 +16,19 @@ export class TTopic {
   @Exclude()
   deletedAt: Date
 
-  topicReactions: TTopicReact[]
+  commentReactions: TCommentReact[]
 
-  constructor(partial: Partial<TTopic>) {
+  constructor(partial: Partial<TComment>) {
     Object.assign(this, partial)
   }
 }
 
-export class TUpdatedTopic {
+export class TUpdatedComment {
   id: number
 
   userId: number
 
-  name: string
+  topicId: number
 
   body: string
 
@@ -39,14 +39,14 @@ export class TUpdatedTopic {
   @Exclude()
   deletedAt: Date
 
-  constructor(partial: Partial<TUpdatedTopic>) {
+  constructor(partial: Partial<TUpdatedComment>) {
     Object.assign(this, partial)
   }
 }
 
 
 
-export class TTopicReact {
+export class TCommentReact {
   userId: number
 
   @Exclude()
@@ -54,7 +54,7 @@ export class TTopicReact {
 
   reaction: string
 
-  constructor(partial: Partial<TTopicReact>) {
+  constructor(partial: Partial<TCommentReact>) {
     Object.assign(this, partial)
   }
 }
