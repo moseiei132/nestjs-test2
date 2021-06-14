@@ -41,7 +41,8 @@ export class TopicService {
     }
 
     async getTopic(topicId: number): Promise<TTopic> {
-        const topic = await this.topicRepo.findOne({ id: topicId , deletedAt: null})
+        const topic = await this.topicRepo.findOne({ id: topicId, deletedAt: null })
+        if(!topic) return plainToClass(TTopic, topic)
         let topicReactions = await this.getTopicReactions(topicId)
         let topic2 = plainToClass(TTopic, topic)
         topicReactions = plainToClass(TTopicReact, topicReactions)
@@ -61,20 +62,23 @@ export class TopicService {
         const createdTopicReact = await this.topicReactRepo.save(data)
         return createdTopicReact
     }
- 
-    async updateTopic(data: IUpdateTopic):Promise<TUpdatedTopic> {
-        const topic = await this.topicRepo.findOne({id: data.topicId, deletedAt: null})
+
+    async updateTopic(data: IUpdateTopic): Promise<TUpdatedTopic> {
+        const topic = await this.topicRepo.findOne({ id: data.topicId, deletedAt: null })
         if (!topic) throw new NotFoundException('Topic not found')
-        if(topic.userId != data.userId)throw new NotAcceptableException('User not owner')
-        const updatedTopic = await this.topicRepo.save({id: data.topicId, name: data.name, body: data.body})
-        return plainToClass(TUpdatedTopic, updatedTopic) 
+        if (topic.userId != data.userId) throw new NotAcceptableException('User not owner')
+        topic.name = data.name
+        topic.body = data.body
+        const updatedTopic = await this.topicRepo.save(topic)
+        return plainToClass(TUpdatedTopic, updatedTopic)
     }
 
-    async deleteTopic(data: IDeleteTopic):Promise<TUpdatedTopic> {
-        const topic = await this.topicRepo.findOne({id: data.topicId, deletedAt: null})
+    async deleteTopic(data: IDeleteTopic): Promise<TUpdatedTopic> {
+        const topic = await this.topicRepo.findOne({ id: data.topicId, deletedAt: null })
         if (!topic) throw new NotFoundException('Topic not found')
-        if(topic.userId != data.userId)throw new NotAcceptableException('User not owner')
-        const updatedTopic = await this.topicRepo.save({id: data.topicId, deletedAt: new Date().toLocaleDateString()})
-        return plainToClass(TUpdatedTopic, updatedTopic) 
+        if (topic.userId != data.userId) throw new NotAcceptableException('User not owner')
+        topic.deletedAt = new Date()
+        const updatedTopic = await this.topicRepo.save(topic)
+        return plainToClass(TUpdatedTopic, updatedTopic)
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { UseUser } from '../common/decorators/user.decorator'
 import { TUser } from '../users/transformers/user.transformer'
@@ -39,7 +39,7 @@ export class TopicController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Patch('/:topicId')
+  @Put('/:topicId')
   async updateTopic(
     @UseUser() user: TUser,
     @Param('topicId') topicId: number,
