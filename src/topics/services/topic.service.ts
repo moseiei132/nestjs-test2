@@ -41,13 +41,8 @@ export class TopicService {
     }
 
     async getTopic(topicId: number): Promise<TTopic> {
-        const topic = await this.topicRepo.findOne({ id: topicId, deletedAt: null })
-        if(!topic) return plainToClass(TTopic, topic)
-        let topicReactions = await this.getTopicReactions(topicId)
-        let topic2 = plainToClass(TTopic, topic)
-        topicReactions = plainToClass(TTopicReact, topicReactions)
-        topic2 = { ...topic2, topicReactions: topicReactions }
-        return topic2
+        const topic = await this.topicRepo.findOne({ where:{id: topicId, deletedAt: null}, relations: ['topicReactions'] })
+        return plainToClass(TTopic, topic)
     }
 
     async createTopicReact(data: ICreateTopicReact): Promise<any> {
