@@ -17,10 +17,10 @@ export interface IUpdateTopic {
 }
 
 export interface IDeleteTopic {
-    userId: number
-  
-    topicId: number
-  }
+  userId: number
+
+  topicId: number
+}
 
 export interface ICreateTopicReact {
   topicId: number

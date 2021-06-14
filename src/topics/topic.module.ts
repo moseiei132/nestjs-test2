@@ -9,9 +9,8 @@ import { TopicController } from './topic.controller'
 @Module({
   imports: [
     TypeOrmModule.forFeature([TopicReactionRepository, TopicRepository]),
-    CommentModule
-  ]
-  ,
+    CommentModule,
+  ],
   controllers: [TopicController],
   providers: [TopicService],
   exports: [TopicService],

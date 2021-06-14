@@ -44,8 +44,6 @@ export class TUpdatedTopic {
   }
 }
 
-
-
 export class TTopicReact {
   userId: number
 

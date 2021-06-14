@@ -15,7 +15,7 @@ export interface Response<T> {
 
 @Injectable()
 export class TransformInterceptor<T>
-  implements NestInterceptor<T, Promise<Response<T>>>
+implements NestInterceptor<T, Promise<Response<T>>>
 {
   async intercept(
     context: ExecutionContext,

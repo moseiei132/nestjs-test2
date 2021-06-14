@@ -44,8 +44,6 @@ export class TUpdatedComment {
   }
 }
 
-
-
 export class TCommentReact {
   userId: number
 

@@ -1,11 +1,24 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { UseUser } from '../common/decorators/user.decorator'
 import { TUser } from '../users/transformers/user.transformer'
 import { CreateTopicDto } from './dtos/topic.dto'
 import { Topic } from './entities/topic.entity'
 import { TopicService } from './services/topic.service'
-import { TTopic, TTopicReact, TUpdatedTopic } from './transformers/topic.transformer'
+import {
+  TTopic,
+  TTopicReact,
+  TUpdatedTopic,
+} from './transformers/topic.transformer'
 
 @Controller('topics')
 export class TopicController {
@@ -15,7 +28,7 @@ export class TopicController {
   @Post()
   async createTopic(
     @UseUser() user: TUser,
-    @Body() data: CreateTopicDto,
+      @Body() data: CreateTopicDto,
   ): Promise<Topic> {
     return this.topicService.createTopic({
       userId: user.id,
@@ -28,8 +41,8 @@ export class TopicController {
   @Post('/:topicId')
   async createTopicReact(
     @UseUser() user: TUser,
-    @Param('topicId') topicId: number,
-    @Body('reaction') reaction: string,
+      @Param('topicId') topicId: number,
+      @Body('reaction') reaction: string,
   ): Promise<TTopicReact> {
     return this.topicService.createTopicReact({
       userId: user.id,
@@ -42,14 +55,14 @@ export class TopicController {
   @Put('/:topicId')
   async updateTopic(
     @UseUser() user: TUser,
-    @Param('topicId') topicId: number,
-    @Body() data: CreateTopicDto,
-  )   : Promise<TUpdatedTopic>{
+      @Param('topicId') topicId: number,
+      @Body() data: CreateTopicDto,
+  ): Promise<TUpdatedTopic> {
     return this.topicService.updateTopic({
       userId: user.id,
       topicId,
       body: data.body,
-      name: data.name
+      name: data.name,
     })
   }
 
@@ -57,11 +70,11 @@ export class TopicController {
   @Delete('/:topicId')
   async deleteTopic(
     @UseUser() user: TUser,
-    @Param('topicId') topicId: number,
-  )   : Promise<TUpdatedTopic>{
+      @Param('topicId') topicId: number,
+  ): Promise<TUpdatedTopic> {
     return this.topicService.deleteTopic({
       userId: user.id,
-      topicId
+      topicId,
     })
   }
 
