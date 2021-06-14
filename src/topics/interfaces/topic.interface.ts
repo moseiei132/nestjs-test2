@@ -16,6 +16,12 @@ export interface IUpdateTopic {
   body: string
 }
 
+export interface IDeleteTopic {
+    userId: number
+  
+    topicId: number
+  }
+
 export interface ICreateTopicReact {
   topicId: number
 

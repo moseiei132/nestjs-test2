@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { UseUser } from '../common/decorators/user.decorator'
 import { TUser } from '../users/transformers/user.transformer'
@@ -50,6 +50,18 @@ export class TopicController {
       topicId,
       body: data.body,
       name: data.name
+    })
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('/:topicId')
+  async deleteTopic(
+    @UseUser() user: TUser,
+    @Param('topicId') topicId: number,
+  )   : Promise<TUpdatedTopic>{
+    return this.topicService.deleteTopic({
+      userId: user.id,
+      topicId
     })
   }
 

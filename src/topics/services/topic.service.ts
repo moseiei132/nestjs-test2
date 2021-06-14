@@ -6,6 +6,7 @@ import { Topic } from '../entities/topic.entity'
 import {
     ICreateTopic,
     ICreateTopicReact,
+    IDeleteTopic,
     IUpdateTopic,
 } from '../interfaces/topic.interface'
 import { TopicReactionRepository } from '../repositories/topic-reaction.repository'
@@ -40,7 +41,7 @@ export class TopicService {
     }
 
     async getTopic(topicId: number): Promise<TTopic> {
-        const topic = await this.topicRepo.findOne({ id: topicId })
+        const topic = await this.topicRepo.findOne({ id: topicId , deletedAt: null})
         let topicReactions = await this.getTopicReactions(topicId)
         let topic2 = plainToClass(TTopic, topic)
         topicReactions = plainToClass(TTopicReact, topicReactions)
@@ -62,10 +63,18 @@ export class TopicService {
     }
  
     async updateTopic(data: IUpdateTopic):Promise<TUpdatedTopic> {
-        const topic = await this.topicRepo.findOne({id: data.topicId})
+        const topic = await this.topicRepo.findOne({id: data.topicId, deletedAt: null})
         if (!topic) throw new NotFoundException('Topic not found')
         if(topic.userId != data.userId)throw new NotAcceptableException('User not owner')
-        const updatedTopic = await this.topicRepo.save({id: data.topicId, name: data.name, body: data.body, userId: data.userId})
+        const updatedTopic = await this.topicRepo.save({id: data.topicId, name: data.name, body: data.body})
+        return plainToClass(TUpdatedTopic, updatedTopic) 
+    }
+
+    async deleteTopic(data: IDeleteTopic):Promise<TUpdatedTopic> {
+        const topic = await this.topicRepo.findOne({id: data.topicId, deletedAt: null})
+        if (!topic) throw new NotFoundException('Topic not found')
+        if(topic.userId != data.userId)throw new NotAcceptableException('User not owner')
+        const updatedTopic = await this.topicRepo.save({id: data.topicId, deletedAt: new Date().toLocaleDateString()})
         return plainToClass(TUpdatedTopic, updatedTopic) 
     }
 }
