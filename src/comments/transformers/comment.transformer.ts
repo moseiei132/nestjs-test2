@@ -48,7 +48,7 @@ export class TCommentReact {
   userId: number
 
   @Exclude()
-  topicId: number
+  commentId: number
 
   reaction: string
 

@@ -28,9 +28,8 @@ export class CommentService {
     @InjectRepository(CommentReactionRepository)
     private commentReactRepo: CommentReactionRepository,
   ) {}
-  async createComment(data: ICreateComment): Promise<Comment> {
-    const createdComment = await this.commentRepo.save(data)
-    return createdComment
+  createComment(data: ICreateComment): Promise<Comment> {
+    return this.commentRepo.save(data)
   }
 
   async getCommentReactions(commentId: number): Promise<TCommentReact[]> {
@@ -44,7 +43,14 @@ export class CommentService {
       relations: ['commentReactions'],
     })
     if (comments.length === 0) return plainToClass(TComment, comments)
-    return plainToClass(TComment, comments)
+    let comments2 = comments.map((item) => {
+      const commentReactions = plainToClass(
+        TCommentReact,
+        item.commentReactions,
+      )
+      return { ...item, commentReactions }
+    })
+    return plainToClass(TComment, comments2)
   }
 
   async getCommentReaction(
@@ -68,7 +74,8 @@ export class CommentService {
         commentId: data.commentId,
         userId: data.userId,
       })
-      if (commentReaction.reaction === data.reaction) return commentReaction
+      if (commentReaction.reaction === data.reaction)
+        return plainToClass(TCommentReact, {})
     }
     const createdCommentReact = await this.commentReactRepo.save(data)
     return plainToClass(TCommentReact, createdCommentReact)
@@ -82,8 +89,7 @@ export class CommentService {
     if (!comment) throw new NotFoundException('Topic not found')
     if (comment.userId != data.userId)
       throw new NotAcceptableException('User not owner')
-    comment.body = data.body
-    const updatedComment = await this.commentRepo.save(comment)
+    const updatedComment = await this.commentRepo.save({...comment, body: data.body})
     return plainToClass(TUpdatedComment, updatedComment)
   }
 

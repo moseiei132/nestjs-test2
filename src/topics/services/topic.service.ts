@@ -26,9 +26,8 @@ export class TopicService {
     private topicReactRepo: TopicReactionRepository,
   ) {}
 
-  async createTopic(data: ICreateTopic): Promise<Topic> {
-    const createdTopic = await this.topicRepo.save(data)
-    return createdTopic
+  createTopic(data: ICreateTopic): Promise<Topic> {
+    return this.topicRepo.save(data)
   }
 
   async getTopicReactions(topicId: number): Promise<TTopicReact[]> {
@@ -59,7 +58,7 @@ export class TopicService {
         topicId: data.topicId,
         userId: data.userId,
       })
-      if (topicReaction.reaction === data.reaction) return topicReaction
+      if (topicReaction.reaction === data.reaction) return null
     }
     const createdTopicReact = await this.topicReactRepo.save(data)
     return plainToClass(TTopicReact, createdTopicReact)
@@ -73,9 +72,11 @@ export class TopicService {
     if (!topic) throw new NotFoundException('Topic not found')
     if (topic.userId != data.userId)
       throw new NotAcceptableException('User not owner')
-    topic.name = data.name
-    topic.body = data.body
-    const updatedTopic = await this.topicRepo.save(topic)
+    const updatedTopic = await this.topicRepo.save({
+      ...topic,
+      name: data.name,
+      body: data.body,
+    })
     return plainToClass(TUpdatedTopic, updatedTopic)
   }
 
@@ -87,8 +88,10 @@ export class TopicService {
     if (!topic) throw new NotFoundException('Topic not found')
     if (topic.userId != data.userId)
       throw new NotAcceptableException('User not owner')
-    topic.deletedAt = new Date()
-    const updatedTopic = await this.topicRepo.save(topic)
+    const updatedTopic = await this.topicRepo.save({
+      ...topic,
+      deletedAt: new Date(),
+    })
     return plainToClass(TUpdatedTopic, updatedTopic)
   }
 }
