@@ -101,8 +101,7 @@ export class CommentService {
     if (!comment) throw new NotFoundException('Topic not found')
     if (comment.userId != data.userId)
       throw new NotAcceptableException('User not owner')
-    comment.deletedAt = new Date()
-    const updatedComment = await this.commentRepo.save(comment)
+    const updatedComment = await this.commentRepo.save({...comment, deletedAt: new Date()})
     return plainToClass(TUpdatedComment, updatedComment)
   }
 }

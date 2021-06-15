@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UseUser } from '../common/decorators/user.decorator'
 import { TUser } from '../users/transformers/user.transformer'
 import { Comment } from './entities/comment.entity'
@@ -19,11 +20,13 @@ import {
   TUpdatedComment,
 } from './transformers/comment.transformer'
 
+@ApiTags('CommentController')
 @Controller('comments')
 export class CommentController {
   constructor(private commentService: CommentService) {}
   @UseGuards(AuthGuard('jwt'))
   @Post('topics/:topicId')
+  @ApiCreatedResponse()
   async createComment(
     @UseUser() user: TUser,
     @Body('body') body: string,
@@ -38,6 +41,7 @@ export class CommentController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put('/:commentId')
+  @ApiOkResponse()
   async updateTopic(
     @UseUser() user: TUser,
     @Param('commentId') commentId: number,
@@ -52,6 +56,7 @@ export class CommentController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/:commentId')
+  @ApiOkResponse()
   async deleteTopic(
     @UseUser() user: TUser,
     @Param('commentId') commentId: number,
@@ -64,6 +69,7 @@ export class CommentController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/:commentId')
+  @ApiCreatedResponse()
   async createCommentReact(
     @UseUser() user: TUser,
     @Param('commentId') commentId: number,
@@ -77,6 +83,7 @@ export class CommentController {
   }
 
   @Get('topics/:topicId')
+  @ApiOkResponse()
   async getComment(@Param('topicId') topicId: number): Promise<TComment[]> {
     return this.commentService.getCommentsByTopicId(topicId)
   }

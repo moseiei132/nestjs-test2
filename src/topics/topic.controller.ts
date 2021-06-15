@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UseUser } from '../common/decorators/user.decorator'
 import { TUser } from '../users/transformers/user.transformer'
 import { CreateTopicDto } from './dtos/topic.dto'
@@ -20,12 +21,14 @@ import {
   TUpdatedTopic,
 } from './transformers/topic.transformer'
 
+@ApiTags('TopicController')
 @Controller('topics')
 export class TopicController {
   constructor(private topicService: TopicService) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
+  @ApiCreatedResponse()
   async createTopic(
     @UseUser() user: TUser,
     @Body() data: CreateTopicDto,
@@ -39,6 +42,7 @@ export class TopicController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/:topicId')
+  @ApiCreatedResponse()
   async createTopicReact(
     @UseUser() user: TUser,
     @Param('topicId') topicId: number,
@@ -53,6 +57,7 @@ export class TopicController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put('/:topicId')
+  @ApiOkResponse()
   async updateTopic(
     @UseUser() user: TUser,
     @Param('topicId') topicId: number,
@@ -68,6 +73,7 @@ export class TopicController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/:topicId')
+  @ApiOkResponse()
   async deleteTopic(
     @UseUser() user: TUser,
     @Param('topicId') topicId: number,
@@ -79,6 +85,7 @@ export class TopicController {
   }
 
   @Get('/:topicId')
+  @ApiOkResponse()
   async getTopic(@Param('topicId') topicId: number): Promise<TTopic> {
     return this.topicService.getTopic(topicId)
   }
