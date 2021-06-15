@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { plainToClass } from 'class-transformer'
-import { TopicReactionRepository } from '../../topics/repositories/topic-reaction.repository'
 import { TopicRepository } from '../../topics/repositories/topic.repository'
 import { Comment } from '../entities/comment.entity'
 import {
@@ -71,6 +70,7 @@ export class CommentService {
   }
 
   async createCommentReact(data: ICreateCommentReact): Promise<TCommentReact> {
+    
     const commentReaction = await this.getCommentReaction(
       data.commentId,
       data.userId,

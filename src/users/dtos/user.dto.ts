@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-valid
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  @MinLength(6)
+  @MinLength(4)
   @MaxLength(45, {
     message: 'Username is too long',
   })
@@ -13,7 +13,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(8)
+  @MinLength(4)
   @ApiProperty()
   password: string
 
