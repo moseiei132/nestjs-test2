@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { plainToClass } from 'class-transformer'
+import { TopicReactionRepository } from '../../topics/repositories/topic-reaction.repository'
+import { TopicRepository } from '../../topics/repositories/topic.repository'
 import { Comment } from '../entities/comment.entity'
 import {
   ICreateComment,
@@ -27,8 +29,12 @@ export class CommentService {
     private commentRepo: CommentRepository,
     @InjectRepository(CommentReactionRepository)
     private commentReactRepo: CommentReactionRepository,
+    @InjectRepository(TopicRepository)
+    private topicRepo: TopicRepository,
   ) {}
-  createComment(data: ICreateComment): Promise<Comment> {
+  async createComment(data: ICreateComment): Promise<Comment> {
+    const topic = await this.topicRepo.findOne({id: data.topicId})
+    if(!topic)throw new NotFoundException('Topic not found')
     return this.commentRepo.save(data)
   }
 
